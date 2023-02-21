@@ -3,13 +3,20 @@ You are given the tables below containing information on Robinhood trades and us
 Output the city and number of orders.
 
 trades Table:
-Column Name	Type
-order_id	integer
-user_id	integer
-price	decimal
-quantity	integer
-status	string('Completed' ,'Cancelled')
-timestamp	datetime
+Column Name	 Type
+order_id	   integer
+user_id	     integer
+price	       decimal
+quantity	   integer
+status	     string('Completed' ,'Cancelled')
+timestamp	   datetime
+
+users Table:
+Column Name	 Type
+user_id	     integer
+city	       string
+email	       string
+signup_date	 datetime
 
 
 SELECT 
