@@ -1,0 +1,99 @@
+CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer.
+
+Write a query to find the top 3 most profitable drugs sold, and how much profit they made. Assume that there are no ties in the profits. Display the result from the highest to the lowest total profit.
+
+Definition:
+
+cogs stands for Cost of Goods Sold which is the direct cost associated with producing the drug.
+Total Profit = Total Sales - Cost of Goods Sold
+If you like this question, try out Pharmacy Analytics (Part 2)!
+
+pharmacy_sales Table:
+Column Name	  Type
+product_id	  integer
+units_sold	  integer
+total_sales	  decimal
+cogs	        decimal
+manufacturer	varchar
+drug	        varchar
+
+
+SELECT 
+  drug,
+  total_sales - cogs AS total_profit
+FROM 
+  pharmacy_sales
+ORDER BY
+  total_profit DESC
+  LIMIT 3;
+  
+  Output
+
+drug	     total_profit
+Humira	   81515652.55
+Keytruda	 11622022.02
+Dupixent	 11217052.34
+
+CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer.
+
+Write a query to find out which manufacturer is associated with the drugs that were not profitable and how much money CVS lost on these drugs. 
+
+Output the manufacturer, number of drugs and total losses. Total losses should be in absolute value. Display the results with the highest losses on top.
+
+SELECT 
+  manufacturer,
+  COUNT(drug) AS Num_of_Drugs,
+  ABS(SUM(total_sales - cogs)) AS total_loss
+FROM 
+  pharmacy_sales
+WHERE 
+  total_sales - cogs <=0
+GROUP BY
+  manufacturer,
+  total_loss
+ORDER BY
+  total_loss DESC
+  
+Output
+
+manufacturer	       num_of_drugs	    total_loss
+Johnson & Johnson   	6             	894913.13
+Eli Lilly	            4	              447352.90
+Biogen	              3	              417018.89
+AbbVie	              2	              413991.10
+Roche	                2	              159741.62
+Bayer               	1	              28785.28
+
+CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer.
+
+Write a query to find the total sales of drugs for each manufacturer. Round your answer to the closest million, and report your results in descending order of total sales.
+
+Because this data is being directly fed into a dashboard which is being seen by business stakeholders, format your result like this: "$36 million".
+
+
+SELECT 
+  manufacturer,
+  CONCAT('$',ROUND(SUM(total_sales)/1000000),' ','million') AS sale
+FROM 
+  pharmacy_sales
+GROUP BY
+  manufacturer
+ORDER BY
+  SUM(total_sales) DESC
+  
+  Output
+
+manufacturer	      sale
+AbbVie	            $114 million
+Eli Lilly	          $82 million
+Biogen	            $70 million
+Johnson & Johnson	  $43 million
+Bayer	              $34 million
+AstraZeneca       	$32 million
+Pfizer	            $28 million
+Merck	              $27 million
+Novartis	          $26 million
+Sanofi	            $25 million
+Roche               $16 million
+GlaxoSmithKline     $4 million
+  
